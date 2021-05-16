@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 중복확인</title>
+
+    <style>
+        div{
+            color: gray;
+        }
+
+        .box{
+            border: 1px solid blueviolet;
+            text-align: center;
+            width: 500px;
+
+        }
+
+        h2{
+            color: white;
+            font-weight: lighter;
+            background-color: blueviolet;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+
+        function test(){
+            var mainid=opener.document.getElementsByName('userid')[0].value;
+            document.getElementsByName('popid')[0].value = mainid;
+            
+        }
+
+        function check(id){
+            
+            var popid = document.getElementsByName(id)[0].value;
+            
+            var flag=false;
+
+
+
+            if(popid.length<8  || popid.length>12){
+                alert('아이디는 8~12자로 만들어주세요');
+            }else if( popid[0].charCodeAt()>=48 && popid[0].charCodeAt()<=57){
+                alert('아이디는 숫자로 시작할 수 없습니다.');
+            }else if(flag==false){
+                for(var i=0; i<popid.length; i++){
+                    if((popid[i].charCodeAt() >= 32 && popid[i].charCodeAt() <= 47) ||
+                        (popid[i].charCodeAt() >=58 && popid[i].charCodeAt() <=64 )||
+                        (popid[i].charCodeAt() >=91 && popid[i].charCodeAt() <=96) ||
+                        (popid[i].charCodeAt() >=123 && popid[i].charCodeAt() <=126))
+                    {
+                        alert('아이디는 특수문자를 포함할 수 없습니다.');
+                        break;
+                    }
+                }
+                flag = true;
+
+            }
+
+
+            if(flag==true){
+                flag = false;
+                alert('사용가능한 아이디입니다.');
+                opener.document.getElementsByName('userid').value = popid;
+                self.close();
+
+            }
+        }
+
+        function childclose(){
+            alert("창을 닫습니다.");
+            self.close();
+        }
+
+    </script>
+</head>
+<body onload="test();">
+    <div class="box">
+        <h2>아이디 중복확인</h2>
+        <div>
+            아이디는 8-12자의 영문과 숫자만 가능합니다. <br>
+        </div>
+        <input type="text" name="popid" value="">
+        <button onclick="check('popid');">중복확인</button>
+        <div>
+        아이디의 첫문자는 숫자로 시작할수 없습니다.
+        <br>특수기호는 포함할 수 없습니다.
+        </div>
+        <p style="text-align: center;"> 
+            <button onclick="childclose();">닫기</button>
+        </p>
+    </div>
+</body>
+</html>

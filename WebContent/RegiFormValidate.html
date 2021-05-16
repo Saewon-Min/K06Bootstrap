@@ -38,7 +38,7 @@
 
     
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -51,37 +51,103 @@
         function idCheck(id){
             
             var check="";
-            check = document.getElementById(id).value;
+            check = document.getElementsByName(id)[0].value;
             
-            if(check.length<8  || check.length>12){
-                alert('아이디는 8~12자로 만들어주세요');
-            }else if( check[0].charCodeAt()>=48 && check[0].charCodeAt()<=57){
-                alert('아이디는 숫자로 시작할 수 없습니다.');
-            }else {
-                for(var i=0; i<check.length; i++){
-                    if((check[i].charCodeAt() >= 32 && check[i].charCodeAt() <= 47) ||
-                        (check[i].charCodeAt() >=58 && check[i].charCodeAt() <=64 )||
-                        (check[i].charCodeAt() >=91 && check[i].charCodeAt() <=96) ||
-                        (check[i].charCodeAt() >=123 && check[i].charCodeAt() <=126))
-                    {
-                        alert('아이디는 특수문자를 포함할 수 없습니다.');
-                    }
+            if(check == ""){
+                alert('아이디를 입력해주세요');
+            }else{
+                winObj = window.open("./popup.html","pop1",
+                "width=500, height=300,left=0,top=0");
+                //popup();
+                //winObj.document.getElementsByName('popid')[0].value = check;
+                
 
-                    if('여기부터 다시하기'){
-                        alert('아이디는 숫자/영문자로만 이루어져야합니다.');
-                    }
-                }
             }
+
+            
             
         }
 
+       
 
 
+        function passCheck(pass){
+
+            var check="";
+            check = document.getElementsByName(pass)[0].value;
+            
+            var symbol="!@#$%^&*";
+            var flag = true;
+
+            if(check.length<6 || check.length>20){
+                alert('비밀번호는 6자~20자로 구성해주세요');
+                //break;
+                
+            }
+
+            for(var i=0; i<symbol.length; i++){
+                if(check.includes(symbol[i])==true){
+                    flag=false;
+                    break;
+                }
+            }
+
+            if(flag==true){
+                alert('비밀번호는 반드시 숫자와 특수기호 하나 이상을 포함해야합니다.');
+                //break;
+            }
+
+            return check;
+        }
+
+        function passCheck2(pass2){
+
+            var check="";
+            check = document.getElementsByName(pass2)[0].value;
+           
+            var firstPass = passCheck('pass1');
+
+            var divTag = document.getElementById('passcheck');
+            if(firstPass != check){
+                divTag.style.color='red';
+                divTag.innerHTML='비밀번호 불일치';
+            }else{
+                divTag.innerHTML='비밀번호 일치';
+            }
+            
+
+        }
 
 
+        function commonFocusMove(obj,flag){
+            
+            if(obj.value.length >= 4 ){
+                if(flag==1){
+                    document.getElementsByName('mobile3')[0].focus();
+                }else if(flag==2){
+                    document.getElementsByName('zipcode')[0].focus();
+                }
+            }
 
 
+        }
 
+        function domainfill(obj){
+            
+            var second = "";
+            second = document.getElementsByName('email2')[0];
+            var checkedOPT = obj.options[obj.selectedIndex].value;
+            
+            second.value = checkedOPT;
+            
+            
+        }
+        
+        
+        function checkAll(){
+            idCheck('userid');
+        }
+        
 
     </script>
 
@@ -92,9 +158,11 @@
 </head>
 
 <body>
+    
 <div class="AllWrap">
     <div class="wrap_regiform">
         <p>*필수입력사항</p>
+        <form action="" method="post" name='form1' onsubmit="return idCheck('userid');">
         <table class="regi_table">
             <colgroup>
                 <col width="180px">
@@ -103,7 +171,7 @@
             <tr>
                 <td><span class="red">*</span> 아이디</td>
                 <td>
-                    <input type="text" class="w01" name="userid" id='userid'/>       
+                    <input type="text" class="w01" name="userid" value=""/>       
                     <button type="button" onclick="idCheck('userid');">중복확인</button>             
                 </td>
             </tr>
@@ -116,7 +184,7 @@
             <tr>
                 <td><span class="red">*</span> 비밀번호</td>
                 <td>
-                    <input type="text" class="w01" name="pass1" value="" />                   
+                    <input type="text" class="w01" name="pass1" value="" onblur="passCheck('pass1');"/>                   
                 </td>
             </tr>
             <tr>
@@ -131,7 +199,9 @@
             <tr>
                 <td><span class="red">*</span> 비밀번호확인</td>
                 <td>
-                    <input type="text" class="w01" name="pass2" value="" />
+                    <input type="text" class="w01" name="pass2" value="" onblur="passCheck2('pass2');"/>
+                    &nbsp;&nbsp;
+                    <span id='passcheck' style="color: blue;"></span>
                 </td>
             </tr>
             <tr>
@@ -150,13 +220,32 @@
                 <td><span class="red">*</span> 생년월일</td>
                 <td style="padding: 0px 0 5px 5px;">
                     <input type="text" class="w02" name="birthday" value="" />
-                    <img src="./images/pick.jpg" alt="" class="pick" />
+                    <!-- <img src="./images/pick.jpg" alt="" class="pick" /> -->
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span> 휴대폰번호</td>
+                <td>
+                    <select name="mobile1" class="s02">
+                        <option value="">010</option>
+                        <option value="">011</option>
+                        <option value="">016</option>
+                        <option value="">017</option>
+                        <option value="">018</option>
+                        <option value="">019</option>
+                    </select>
+                    -
+                    <input type="text" class="w06" name="mobile2" value="" 
+                        maxlength="4"  onkeyup="commonFocusMove(this,1)"  />
+                    -
+                    <input type="text" class="w06" name="mobile3" value="" 
+                        maxlength="4"  onkeyup="commonFocusMove(this,2)" />
                 </td>
             </tr>
             <tr>
                 <td><span class="red">*</span> 주소</td>
                 <td>
-                    <input type="text" class="w03" name="zipcode" value="" />
+                    <input type="text" class="w03" name="zipcode" value=""  />
                     <button type="button" onclick="">우편번호찾기</button> 
                 </td>
             </tr>
@@ -173,26 +262,15 @@
                     <input type="text" class="w05" name="email1" value="" />
                     @
                     <input type="text" class="w05" name="email2" value="" />
-                    <select name="email_domain" class="s01">
-                        <option value="">직접입력</option>
+                    <select name="email_domain" class="s01" onchange="domainfill(this);">
+                        <option value="" selected>직접입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="hanmail.net">hanmail.net</option>
                         <option value="gmail.com">gmail.com</option>
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td><span class="red">*</span> 휴대폰번호</td>
-                <td>
-                    <select name="mobile1" class="s02">
-                        <option value="">010</option>
-                    </select>
-                    -
-                    <input type="text" class="w06" name="mobile2" value="" />
-                    -
-                    <input type="text" class="w06" name="mobile3" value="" />
-                </td>
-            </tr>
+           
             <tr>
                 <td>전화번호</td>
                 <td>
@@ -212,9 +290,10 @@
             </tr>
         </table>
         <div style="text-align: center; margin-top:10px;">
-            <input type="submit" value="회원가입하기">
+            <input type="submit" value="회원가입하기"> 
             <input type="reset" value="작성내용리셋">
         </div>
+    </form>
     </div>
 </div>
 </body>
