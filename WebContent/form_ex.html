@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h4>폼1</h4>
+    <script>
+        // 3. 입력 상자에 입력된 값이 있는지 확인한다.
+        function vali1(f){
+            if(f.user_id.value==""){
+                alert('아이디를 입력하세요');
+                f.user_id.focus();
+                // 4. 입력값이 없으면 리스너쪽으로 false를 반환한다.
+                return false;
+            }
+        }
+    </script>
+    <!-- 2. submit이벤트를 onsubmit이벤트 리스너가 감지 후
+        vali1()함수를 호출한다. -->
+        <!-- 5. false가 반환되면 전송이 중단 된다. -->
+    <form action="http://naver.com" name="frm1" onsubmit="return vali1(this);">
+        <input type="text" name="user_id">
+        <!-- 1. submit은 버튼을 누르는 순간 submit 이벤트가 발생함 -->
+        <input type="submit" value="전송1">
+    </form>
+
+
+    <script>
+        function vali2(f){
+            if(f.user_id.value==""){
+                alert('아이디를 입력하세요');
+                f.user_id.focus();
+                // 해당 함수의 실행을 종료한다. 안해주면 그냥 실행됨
+                return;
+            }
+            // submit 이벤트가 없는 상태이므로 함수를 통해 전송한다.
+            f.submit();
+        }
+    </script>
+    <h4>폼2</h4>
+    <form action="http://daum.com" name="frm2" >
+        <input type="text" name="user_id">
+        <!-- button은 실제 이벤트 발생 X => 함수로 이벤트를 발생 시켜야함 -->
+        <input type="button" value="전송2" onclick="vali2(this.form);">
+    </form>
+
+</body>
+</html>

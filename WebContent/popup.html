@@ -38,37 +38,15 @@
             
             var popid = document.getElementsByName(id)[0].value;
             
-            var flag=false;
-
-
-
-            if(popid.length<8  || popid.length>12){
-                alert('아이디는 8~12자로 만들어주세요');
-            }else if( popid[0].charCodeAt()>=48 && popid[0].charCodeAt()<=57){
-                alert('아이디는 숫자로 시작할 수 없습니다.');
-            }else if(flag==false){
-                for(var i=0; i<popid.length; i++){
-                    if((popid[i].charCodeAt() >= 32 && popid[i].charCodeAt() <= 47) ||
-                        (popid[i].charCodeAt() >=58 && popid[i].charCodeAt() <=64 )||
-                        (popid[i].charCodeAt() >=91 && popid[i].charCodeAt() <=96) ||
-                        (popid[i].charCodeAt() >=123 && popid[i].charCodeAt() <=126))
-                    {
-                        alert('아이디는 특수문자를 포함할 수 없습니다.');
-                        break;
-                    }
-                }
-                flag = true;
-
-            }
-
-
-            if(flag==true){
-                flag = false;
+            /*
+            if(){
+               
                 alert('사용가능한 아이디입니다.');
                 opener.document.getElementsByName('userid').value = popid;
                 self.close();
 
             }
+            */
         }
 
         function childclose(){
