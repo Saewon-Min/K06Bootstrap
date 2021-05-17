@@ -68,33 +68,27 @@
             }else if( check[0].charCodeAt()>=48 && check[0].charCodeAt()<=57){
                 alert('아이디는 숫자로 시작할 수 없습니다.');
             }else if(flag==false){
-                for(var i=0; i<check.length; i++){
-                    if((check[i].charCodeAt() >= 32 && check[i].charCodeAt() <= 47) ||
-                        (check[i].charCodeAt() >=58 && check[i].charCodeAt() <=64 )||
-                        (check[i].charCodeAt() >=91 && check[i].charCodeAt() <=96) ||
-                        (check[i].charCodeAt() >=123 && check[i].charCodeAt() <=126))
-                    {
-                        alert('아이디는 특수문자를 포함할 수 없습니다.');
-                        break;
-                    }
+                if(simbolCheck(check)==false){
+                    alert('아이디는 특수문자를 포함할 수 없습니다.');
+                }else if(simbolCheck(check)==true){
+                     winObj = window.open("./popup.html","pop1",
+                        "width=500, height=300,left=0,top=0");
                 }
-                flag = true;
-
             }
-            
-            if(flag==true){
-                winObj = window.open("./popup.html","pop1",
-                "width=500, height=300,left=0,top=0");
-                //popup();
-                //winObj.document.getElementsByName('popid')[0].value = check;
-            
-            }
-
-            
-            
         }
 
-       
+       function simbolCheck(check){
+            for(var i=0; i<check.length; i++){
+                if((check[i].charCodeAt() >= 32 && check[i].charCodeAt() <= 47) ||
+                    (check[i].charCodeAt() >=58 && check[i].charCodeAt() <=64 )||
+                    (check[i].charCodeAt() >=91 && check[i].charCodeAt() <=96) ||
+                    (check[i].charCodeAt() >=123 && check[i].charCodeAt() <=126))
+                {
+                    return false;
+                }    
+                return true;
+            }
+       }
 
 
         function passCheck(pass){
